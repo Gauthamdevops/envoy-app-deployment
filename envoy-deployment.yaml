@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envoy-deploy
+  namespace: envoy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: envoy-app
+  template:
+    metadata:
+      labels:
+        app: envoy-app
+    spec:
+      nodeSelector:
+        Name: gautham
+      containers:
+      - name: envoy-app
+        image: envoyproxy/envoy:v1.30-latest
+        ports:
+        - containerPort: 10000
+        - containerPort: 9901
+
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+
